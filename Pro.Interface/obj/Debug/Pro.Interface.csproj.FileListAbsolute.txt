@@ -1,0 +1,16 @@
+D:\Personal\Downloads\ProjectDemo-dev_wp\Pro.Interface\bin\Debug\Pro.Interface.dll
+D:\Personal\Downloads\ProjectDemo-dev_wp\Pro.Interface\bin\Debug\Pro.Interface.pdb
+D:\Personal\Downloads\ProjectDemo-dev_wp\Pro.Interface\obj\Debug\Pro.Interface.csproj.CoreCompileInputs.cache
+D:\Personal\Downloads\ProjectDemo-dev_wp\Pro.Interface\obj\Debug\Pro.Interface.dll
+D:\Personal\Downloads\ProjectDemo-dev_wp\Pro.Interface\obj\Debug\Pro.Interface.pdb
+D:\Personal\Downloads\新建文件夹\ProjectDemo-dev_wp\Pro.Interface\bin\Debug\Pro.Interface.dll
+D:\Personal\Downloads\新建文件夹\ProjectDemo-dev_wp\Pro.Interface\bin\Debug\Pro.Interface.pdb
+D:\Personal\Downloads\新建文件夹\ProjectDemo-dev_wp\Pro.Interface\obj\Debug\Pro.Interface.csproj.CoreCompileInputs.cache
+D:\Personal\Downloads\新建文件夹\ProjectDemo-dev_wp\Pro.Interface\obj\Debug\Pro.Interface.dll
+D:\Personal\Downloads\新建文件夹\ProjectDemo-dev_wp\Pro.Interface\obj\Debug\Pro.Interface.pdb
+D:\Personal\Downloads\新建文件夹\ProjectDemo-dev_wp\Pro.Interface\obj\Debug\Pro.Interface.csprojAssemblyReference.cache
+D:\Personal\Downloads\git\新建文件夹\ProjectDemo\Pro.Interface\bin\Debug\Pro.Interface.dll
+D:\Personal\Downloads\git\新建文件夹\ProjectDemo\Pro.Interface\bin\Debug\Pro.Interface.pdb
+D:\Personal\Downloads\git\新建文件夹\ProjectDemo\Pro.Interface\obj\Debug\Pro.Interface.csproj.CoreCompileInputs.cache
+D:\Personal\Downloads\git\新建文件夹\ProjectDemo\Pro.Interface\obj\Debug\Pro.Interface.dll
+D:\Personal\Downloads\git\新建文件夹\ProjectDemo\Pro.Interface\obj\Debug\Pro.Interface.pdb
