@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
+
+<div id="app">
+    <h2>{{message}}</h2>
+    <template>
+        <el-row>
+            <el-col :lg="8" :md="8" :sm="{ span: 24 }" :xs="{ span: 24 }">
+                11
+            </el-col>
+            <el-col :lg="8" :md="8" :sm="{ span: 24 }" :xs="{ span: 24 }">
+                <el-table :data="tableData.rows"
+                          style="width: 100%">
+                    <el-table-column :prop="col.prop"
+                                     :label="col.label"
+                                     v-for="col in columns">
+                    </el-table-column>
+                </el-table>
+                <div class="block">
+                    <el-pagination layout="total, sizes, prev, pager, next, jumper"
+                                   :pager-count="pagerCount"
+                                   :current-page="tableData.pageIndex"
+                                   :page-sizes="pageSizes"
+                                   :page-size="tableData.pageSize"
+                                   :total="tableData.total"
+                                   @@size-change="SizeChange"
+                                   @@current-change="CurrentChange">
+                    </el-pagination>
+                </div>
+            </el-col>
+            <el-col :lg="8" :md="8" :sm="{ span: 24 }" :xs="{ span: 24 }">
+                22
+            </el-col>
+        </el-row>
+    </template>
+</div>
+<script type="text/javascript">
+    new Vue({
+        el: "#app",
+        data: {
+            message: "欢迎来到VUE世界",
+            tableData: {
+                rows: [],
+                pageIndex: 1,
+                pageSize: 4,
+                sortName: "s_createDate-desc",
+                total: 0,
+            },
+            pagerCount: 5,
+            pageSizes: [4, 5, 10, 20, 50],
+            columns: [
+                {
+                    prop: "s_name",
+                    label: "姓名",
+                },
+                {
+                    prop: "s_loginName",
+                    label: "登录名",
+                },
+                {
+                    prop: "s_address",
+                    label: "地址",
+                }
+            ],
+
+        },
+        created() {
+            this.GetList();
+        },
+        methods: {
+            GetList() {
+                var _this = this;
+                var data = { page: _this.tableData.pageIndex, pageSize: _this.tableData.pageSize, sortName: _this.tableData.sortName, searchs: [] };
+                $.post('/Angular/GetStudentByCondition', data, function (data) {
+                    if (data) {
+                        _this.tableData.rows = data.Rows;
+                        _this.tableData.total = data.Total;
+                        _this.tableData.pageIndex = data.PageIndex;
+                        _this.tableData.pageSize = data.PageSize;
+                    }
+                });
+            },
+            SizeChange(size) {
+                var _this = this;
+                _this.tableData.pageSize = size;
+                _this.GetList();
+            },
+            CurrentChange(index) {
+                var _this = this;
+                _this.tableData.pageIndex = index;
+                _this.GetList();
+            },
+        }
+    });
+</script>
+
+

@@ -247,6 +247,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
+    <Compile Include="Controllers\VueController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1172,6 +1173,7 @@
     <Content Include="Views\Student\BootSelect.cshtml" />
     <Content Include="Views\Student\BootTable.cshtml" />
     <Content Include="Views\Student\CompanyTable.cshtml" />
+    <Content Include="Views\Vue\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

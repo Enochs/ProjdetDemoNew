@@ -120,16 +120,6 @@ namespace Pro.WebApi.Controllers
                 //lamada表达式 条件数组
                 List<Expression<Func<StudentDTO, bool>>> parmList = new List<Expression<Func<StudentDTO, bool>>>();
 
-                //if (!string.IsNullOrEmpty(s_name))
-                //{
-                //    parmList.Add(c => c.s_name.Contains(s_name));
-                //}
-
-                //if (!string.IsNullOrEmpty(s_address))
-                //{
-                //    parmList.Add(c => c.s_address.Contains(s_address));
-                //}
-
                 if (searchData != null && searchData.Count() > 0)
                 {
                     foreach (PropModel item in searchData)
@@ -241,6 +231,39 @@ namespace Pro.WebApi.Controllers
                     {
                         ajax.IsSuccess = true;
                         ajax.Message = "修改成功";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(ex.Message, ex);
+            }
+            return ajax;
+        }
+        #endregion
+
+        #region  添加学生信息
+        /// <summary>
+        /// 添加页面  添加功能
+        /// </summary>
+        /// <param name="stu"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public AjaxMessage AddStu(Student stu)
+        {
+            AjaxMessage ajax = new AjaxMessage();
+
+            try
+            {
+                ajax.IsSuccess = false;
+                ajax.Message = "系统异常,添加失败";
+                if (stu != null)
+                {
+                    Student result = stuReporitory.Insert(stu);
+                    if (result != null)
+                    {
+                        ajax.IsSuccess = true;
+                        ajax.Message = "添加成功";
                     }
                 }
             }

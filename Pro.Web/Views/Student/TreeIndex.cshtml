@@ -35,29 +35,29 @@
      * 页面初始化
      */
         $(document).ready(function () {
-            onLoadZTree();
+            onLoadZTree(null);
         });
 
         /**
          * 加载树形结构数据
          */
-        function onLoadZTree() {
-            var treeNodes;
-            $.ajax({
-                async: false,//是否异步
-                cache: false,//是否使用缓存
-                type: 'POST',//请求方式：post
-                dataType: 'json',//数据传输格式：json
-                url: "/Student/GetAllTree",//请求的action路径
-                error: function () {
-                    //请求失败处理函数
-                    alert('亲，请求失败！');
-                },
-                success: function (data) {
-                    //请求成功后处理函数
-                    treeNodes = data;//把后台封装好的简单Json格式赋给treeNodes
-                }
-            });
+        function onLoadZTree(treeNodes) {
+            //var treeNodes;
+            //$.ajax({
+            //    async: false,//是否异步
+            //    cache: false,//是否使用缓存
+            //    type: 'POST',//请求方式：post
+            //    dataType: 'json',//数据传输格式：json
+            //    url: "/Student/GetAllTree",//请求的action路径
+            //    error: function () {
+            //        //请求失败处理函数
+            //        alert('亲，请求失败！');
+            //    },
+            //    success: function (data) {
+            //        //请求成功后处理函数
+            //        treeNodes = data;//把后台封装好的简单Json格式赋给treeNodes
+            //    }
+            //});
 
             var setting = {
                 check: {
@@ -93,7 +93,10 @@
                 }
             };
 
-            var treeNodes = JSON.parse('@Html.Raw(ViewData["data"])');
+            debugger
+            if (!treeNodes) {
+                 treeNodes = JSON.parse('@Html.Raw(ViewData["data"])');
+            }
             var zTree = $.fn.zTree.init($("#user_tree"), setting, treeNodes);
 
             Init();
@@ -147,9 +150,10 @@
         function Searchs() {
             var name = $("#txtName").val();
 
-            $.post("/User/GetTreeData", { name: name }, function (result) {
+            $.post("/Angular/GetTreeView", { name: name }, function (result) {
                 if (result) {
                     var TreeNodes = JSON.parse(result);
+                    debugger
                     onLoadZTree(TreeNodes);
                 }
             });

@@ -70,7 +70,7 @@ namespace Pro.Web.Controllers
                 List<Expression<Func<StudentDTO, bool>>> parmList = new List<Expression<Func<StudentDTO, bool>>>();
 
 
-                if (searchs.Count() > 0)
+                if (searchs != null && searchs.Count() > 0)
                 {
                     foreach (PropModel item in searchs)
                     {
