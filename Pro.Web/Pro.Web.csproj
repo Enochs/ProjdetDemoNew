@@ -1099,9 +1099,14 @@
     <Content Include="Scripts\project-select.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\vue\element-ui\index.css" />
+    <Content Include="Scripts\vue\element-ui\index.js" />
+    <Content Include="Scripts\vue\vue.js" />
     <Content Include="Scripts\ztree\css\awesomeStyle\awesome.less" />
     <Content Include="Scripts\ztree\css\awesomeStyle\fa.less" />
     <Content Include="Scripts\ztree\js\ztree.3.5.26.zip" />
+    <Content Include="Scripts\vue\element-ui\fonts\element-icons.ttf" />
+    <Content Include="Scripts\vue\element-ui\fonts\element-icons.woff" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\ztree\css\awesomeStyle\awesome.css" />
     <Content Include="Scripts\ztree\css\awesomeStyle\img\loading.gif" />

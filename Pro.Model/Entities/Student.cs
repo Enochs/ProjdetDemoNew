@@ -11,10 +11,12 @@ namespace Pro.Model
     public partial class Student
     {
 
-		[Key]
+        [Display(Name = "编号")]
+        [Key]
 		public Guid s_id { get; set; }
 
-		[StringLength(50)]
+        [Display(Name = "姓名")]
+        [StringLength(50)]
 		public string s_name { get; set; }
 
         [Display(Name = "登录名")]
@@ -45,9 +47,11 @@ namespace Pro.Model
         [Display(Name ="备注")]
 		public string s_remark { get; set; }
 
-		public DateTime? s_createDate { get; set; }
+        [Display(Name = "创建日期")]
+        public DateTime? s_createDate { get; set; }
 
-		public Guid? s_Grade_ID { get; set; }
+        [Display(Name = "年级")]
+        public Guid? s_Grade_ID { get; set; }
 
     }
 }
