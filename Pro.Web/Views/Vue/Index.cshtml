@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Index";
 }
+
+<script src="~/Scripts/js/Common.js"></script>
+
 <!-- 引入样式 -->
 <link href="~/Scripts/vue/element-ui/index.css" rel="stylesheet" />
 
@@ -133,7 +136,50 @@
                 </div>
             </el-col>
             <el-col :lg="8" :md="8" :sm="{ span: 24 }" :xs="{ span: 24 }">
-                {{message2}}
+                <div>
+                    <el-form>
+                        <el-form-item label="日期">
+                            <mark class="_mark"
+                                  v-show="showSeason"
+                                  @@click.stop="showSeason=false"></mark>
+                            <el-input placeholder="请选择季度" v-model="showValue" style="width:138px;" @@focus="showSeason=true">
+                                <i slot="prefix" class="el-input__icon el-icon-date"></i>
+                            </el-input>
+                            <el-card class="box-card"
+                                     v-show="showSeason">
+                                <div slot="header" class="clearfix yearBtn">
+                                    <button type="button"
+                                            aria-label="前一年"
+                                            class="el-picker-panel__icon-btn el-date-picker__prev-btn el-icon-d-arrow-left"
+                                            @@click="prev"></button>
+                                    <span role="button" class="el-date-picker__header-label">{{year}}年</span>
+                                    <button type="button"
+                                            aria-label="后一年"
+                                            @@click="next"
+                                            class="el-picker-panel__icon-btn el-date-picker__next-btn el-icon-d-arrow-right"></button>
+                                </div>
+                                <div class="text item">
+                                    <el-button type="text"
+                                               size="medium"
+                                               class="_left"
+                                               @@click="selectSeason(0)">第一季度</el-button>
+                                    <el-button type="text"
+                                               size="medium"
+                                               @*class="_right"*@
+                                               @@click="selectSeason(1)">第二季度</el-button>
+
+                                    <el-button type="text"
+                                               size="medium"
+                                               @*class="_right"*@
+                                               @@click="selectSeason(2)">第三季度</el-button>
+                                    <el-button type="text"
+                                               size="medium"
+                                               @*class="_right"*@
+                                               @@click="selectSeason(3)">第四季度</el-button>
+                                </div>
+                            </el-card>
+                        </el-form-item>
+                </div>
             </el-col>
         </el-row>
     </template>
@@ -178,6 +224,7 @@
                 city: "TJ",
                 job: ["sale", "reception"],
                 fileData: "",
+                season: "2",  //季度
             },
             deptData: [
                 { value: "IT", label: "研发部门" },
@@ -194,6 +241,12 @@
                 { value: "BJ", label: "北京" },
                 { value: "TJ", label: "天津" },
                 { value: "SH", label: "上海" },
+            ],
+            seasonData: [
+                { value: "1", label: "第一季度" },
+                { value: "2", label: "第二季度" },
+                { value: "3", label: "第三季度" },
+                { value: "4", label: "第四季度" },
             ],
             jobData: [
                 { value: "sale", label: "销售人员" },
@@ -222,11 +275,35 @@
                     return time.getTime() > _now || time.getTime() < sevenDays;
                 }
             },
+            //季度选择
+            valueArr: ['01-03', '04-06', '07-09', '10-12'],
+            defaultValue: "",
+            showSeason: false,
+            season: '',
+            year: new Date().getFullYear(),
+            showValue: ''
 
         },
         created() {
             this.Init();
             this.GetList();
+            if (this.defaultValue) {
+                let value = this.defaultValue
+                let arr = value.split('-')
+                this.year = arr[0].slice(0, 4)
+                let str = arr[0].slice(4, 6) + '-' + arr[1].slice(4, 6)
+                let arrAll = this.valueArr
+                this.showValue = `${this.year}年${arrAll.indexOf(str) + 1}季度`
+            }
+        },
+        watch: {
+            defaultValue: function (value, oldValue) {
+                let arr = value.split('-')
+                this.year = arr[0].slice(0, 4)
+                let str = arr[0].slice(4, 6) + '-' + arr[1].slice(4, 6)
+                let arrAll = this.valueArr
+                this.showValue = `${this.year}年${arrAll.indexOf(str) + 1}季度`
+            }
         },
         mounted() {
             this.load();
@@ -304,8 +381,89 @@
                 var m_file = { name: file.name, url: filePath };        //拼接文件名称以及本地地址
                 _this.successList.push(m_file);         //文件放在表单中
             },
+
+            //季度选择
+            one() {
+                this.showSeason = false
+            },
+            prev() {
+                this.year = this.year * 1 - 1
+            },
+            next() {
+                this.year = this.year * 1 + 1
+            },
+            selectSeason(i) {
+
+                let _this = this
+                _this.season = i + 1
+                let arr = _this.valueArr[i].split('-')
+                //var date = that.year + arr[0] + '-' + that.year + arr[1];
+                var beginDay = _this.getFirstDay(_this.year, arr[0]).format("yyyy-MM-dd");
+                var endDay = _this.getLastDay(_this.year, arr[1]).format("yyyy-MM-dd");
+                _this.showSeason = false
+                _this.showValue = `${_this.year}年${_this.season}季度`
+                console.log(_this.showValue + "开始日：" + beginDay + ",结束日：" + endDay);
+            },
+            getFirstDay(year, month) {
+                var new_year = year; //取当前的年份
+                var new_month = month - 1; //取下一个月的第一天，方便计算（最后一天不固定）
+                var new_date = new Date(new_year, new_month, 1); //取当年当月中的第一天
+                return new_date;
+            },
+            getLastDay(year, month) {
+                var new_year = year; //取当前的年份
+                var new_month = month++;//取下一个月的第一天，方便计算（最后一天不固定）
+                if (month > 12) {
+                    new_month -= 12;//月份减
+                    new_year++; //年份增
+                }
+                var new_date = new Date(new_year, new_month, 1); //取当年当月中的第一天
+                return (new Date(new_date.getTime() - 1000 * 60 * 60 * 24)); //获取当月最后一天日期
+            }
         }
     });
+
 </script>
 
 
+<style scoped>
+    ._mark {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0);
+        z-index: 999;
+    }
+
+    .yearBtn {
+        text-align: center;
+        padding: 0
+    }
+
+    .box-card {
+        width: 322px;
+        padding: 0 3px 20px;
+        margin-top: 10px;
+        position: fixed;
+        z-index: 9999
+    }
+
+    .text.item {
+        text-align: center;
+    }
+
+        .text.item > > > .el-button {
+            width: 40%;
+            color: #606266;
+        }
+
+        .text.item ._left {
+            float: left;
+        }
+
+        .text.item ._right {
+            float: right;
+        }
+</style>

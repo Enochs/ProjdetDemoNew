@@ -109,7 +109,7 @@ namespace Pro.Extension
         /// <param name="enumObj"></param>
         /// <returns></returns>
 
-        public static List<SelectListItem> GetSelectList(this Enum enumVal, bool isDefault = true)
+        public static List<SelectListItem> GetSelectList(this Enum enumVal, bool isDefault = true, string defaultValue = "")
         {
 
             List<SelectListItem> selectList = new List<SelectListItem>();
@@ -117,12 +117,27 @@ namespace Pro.Extension
             Type type = enumVal.GetType();
             foreach (int value in Enum.GetValues(type))
             {
-                selectList.Add(new SelectListItem() { Text = GetDisplayNames(enumVal, Enum.GetName(type, value)), Value = value.ToString() });
+                bool isSelected = false;
+                if (!string.IsNullOrEmpty(defaultValue) && defaultValue == value.ToString())
+                {
+                    isSelected = true;
+                }
+
+                selectList.Add(new SelectListItem() { Selected = isSelected, Text = GetDisplayNames(enumVal, Enum.GetName(type, value)), Value = value.ToString() }); ;
             }
             if (isDefault)
             {
                 selectList.Insert(0, new SelectListItem { Text = "请选择", Value = "-1" });
             }
+
+            if (!string.IsNullOrEmpty(defaultValue))
+            {
+                bool isExists = selectList.Any(c => c.Value == defaultValue);
+
+                var selectModel = selectList.FirstOrDefault(c => c.Value == defaultValue);
+                selectModel.Selected = true;
+            }
+
             return selectList;
         }
         #endregion
