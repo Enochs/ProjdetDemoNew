@@ -108,8 +108,15 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
+                    <el-row type="flex">
+                        <el-col :lg="24" :md="24" :sm="{ span: 24 }" :xs="{ span: 24 }">
+                            <el-form-item label="评分：" prop="rate">
+                                <el-rate v-model="value" disabled show-score text-color="#ff9900" score-template="{value}">
+                                </el-rate>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                     <el-form-item>
-
                         <el-button type="primary" @@click="onSubmit">立即创建</el-button>
                         <el-button>取消</el-button>
                     </el-form-item>
@@ -197,6 +204,7 @@
                 sortName: "s_createDate-desc",
                 total: 0,
             },
+            value: 4.6,
             pagerCount: 5,
             pageSizes: [4, 5, 10, 20, 50],
             columns: [
@@ -225,6 +233,7 @@
                 job: ["sale", "reception"],
                 fileData: "",
                 season: "2",  //季度
+                rate: 4.2,  //评分
             },
             deptData: [
                 { value: "IT", label: "研发部门" },

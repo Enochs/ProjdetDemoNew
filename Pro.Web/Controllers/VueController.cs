@@ -38,8 +38,6 @@ namespace Pro.Web.Controllers
 
                     var files = Request.Files;
 
-
-
                     json = Json(new { success = true, msg = "获取数据成功" });
                 }
             }
@@ -51,6 +49,12 @@ namespace Pro.Web.Controllers
             return json;
         }
 
+        /// <summary>
+        /// 自动上传
+        /// </summary>
+        /// <param name="fileData">文件</param>
+        /// <param name="path">路径</param>
+        /// <returns></returns>
         [HttpPost]
         public JsonResult UploadImg(HttpPostedFileBase fileData, string path)
         {

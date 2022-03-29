@@ -82,11 +82,11 @@ namespace Pro.Dal.Stu
                              s_status = c.s_status,
                              SexName = c.s_sex == 0 ? "男" : "女",
                              StatusName = c.s_status == 1 ? "启用" : "禁用",
-                             s_Grade_ID=c.s_Grade_ID,
+                             s_Grade_ID = c.s_Grade_ID,
                              GradeName = d.GradeName
                          });
 
-            if (parmList != null || parmList.Count!=0)
+            if (parmList != null || parmList.Count != 0)
             {
                 foreach (var parm in parmList)
                 {
@@ -154,6 +154,27 @@ namespace Pro.Dal.Stu
             int result = 0;
 
             return result;
+        }
+
+
+        public AjaxMessage AddStudent(Student stuModel)
+        {
+            AjaxMessage ajax = new AjaxMessage() { IsSuccess = false };
+            if (stuModel != null)
+            {
+                bool isExists = StuBLL.Any(c => c.s_name == stuModel.s_name && c.s_loginName == stuModel.s_loginName);
+                if (isExists)       //数据已经存在
+                {
+                    ajax.Message = "姓名或者登录名已经存在,请更改";
+                }
+                else
+                {
+                    StuBLL.Insert(stuModel);
+                    ajax.IsSuccess = true;
+                    ajax.Message = "添加成功";
+                }
+            }
+            return ajax;
         }
     }
 }

@@ -265,7 +265,8 @@ namespace Pro.Extension
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    ParameterExpression param = Expression.Parameter(typeof(T), "c");
+                    //expression表达式树主体构造开始
+                    ParameterExpression param = Expression.Parameter(typeof(T), "c");   //声明Lambda表达式中的参数表达式c(c=>c.columnaName == value)
                     MethodInfo method = null;
                     if (!string.IsNullOrEmpty(methodInfo))
                     {
@@ -393,7 +394,7 @@ namespace Pro.Extension
         #endregion
 
 
-        #region 组装右边的值
+        #region 组装右边的值 常量表达式
         /// <summary>
         /// 右边的值 并转成相应的数据类型
         /// </summary>

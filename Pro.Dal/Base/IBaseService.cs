@@ -103,5 +103,14 @@ namespace Pro.Dal.Base
         /// <returns></returns>
         List<T> GetListByPageer<TKey>(IQueryable<T> query, int pageIndex, int pageSize, ref int rowCount, List<Expression<Func<T, bool>>> parmList, Expression<Func<T, TKey>> orderByLambda, bool isAsc = true, AspNetPager CtrPagerIndex = null);
         #endregion
+
+        #region 7.0 判断数据是否存在
+        /// <summary>
+        /// 数据是否存在 2022-03-03
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <></returns>
+        bool Any(Expression<Func<T, bool>> predicate);
+        #endregion
     }
 }

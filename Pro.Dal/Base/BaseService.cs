@@ -425,5 +425,19 @@ namespace Pro.Dal.Base
         }
 
         #endregion
+
+
+        #region 7.0 判断数据是否存在
+        /// <summary>
+        /// 数据是否存在
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool Any(Expression<Func<T, bool>> predicate)
+        {
+            return ObjEntity.Set<T>().Any(predicate);
+        }
+
+        #endregion
     }
 }

@@ -69,12 +69,11 @@ namespace Pro.Web.Controllers
                 //lamada表达式 条件数组
                 List<Expression<Func<StudentDTO, bool>>> parmList = new List<Expression<Func<StudentDTO, bool>>>();
 
-
                 if (searchs != null && searchs.Count() > 0)
                 {
                     foreach (PropModel item in searchs)
                     {
-                        if (!string.IsNullOrEmpty(item.value) && item.value != ",")
+                        if (!string.IsNullOrEmpty(item.value) && item.value != "," && item.value != "-1")
                         {
                             ExpressionTools.GetEqualPars(item.property, parmList, item.value, item.method);
                         }
@@ -121,7 +120,7 @@ namespace Pro.Web.Controllers
             return RedirectToAction("AddStudent", new { name = "张楚" });
         }
 
-        public ActionResult AddStudent(string txtName)
+        public ActionResult AddStudent()
         {
             //string tname = txtName;
             //string sname = Request["name"].ToString();
@@ -264,7 +263,10 @@ namespace Pro.Web.Controllers
             ajax.Message = "系统异常";
             if (stu != null)
             {
-                Student result = stuReporitory.Update(stu);
+                List<Student> stuList = new List<Student>();
+                stuList.Add(stu);
+
+                Student result = stuReporitory.zUpdate(stuList);
                 if (result != null)
                 {
                     ajax.IsSuccess = true;
@@ -275,6 +277,29 @@ namespace Pro.Web.Controllers
         }
         #endregion
 
-       
+        #region 添加页面  添加功能
+        /// <summary>
+        /// 添加页面  添加功能
+        /// </summary>
+        /// <param name="stu"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult AddStudent(Student stu)
+        {
+            AjaxMessage ajax = new AjaxMessage();
+            ajax.IsSuccess = false;
+            ajax.Message = "系统异常";
+            if (stu != null)
+            {
+                Student result = stuReporitory.Insert(stu);
+                if (result != null)
+                {
+                    ajax.IsSuccess = true;
+                    ajax.Message = "添加成功";
+                }
+            }
+            return Json(ajax);
+        }
+        #endregion
     }
 }

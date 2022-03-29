@@ -184,7 +184,7 @@
             <div class="form-group">
                 <span>每页显示</span>
                 <select ng-model="pageSize" ng-change="Searchs()">
-                    <option ng-repeat="page in pageSizeList" value="{{page.pagesize}}" ng-selected="$index==1">{{page.pagesize}}</option>
+                    <option ng-repeat="page in pageSizeList" value="{{page.pagesize}}" ng-selected="$index==2">{{page.pagesize}}</option>
                 </select>
                 <span>条</span>
             </div>
@@ -295,7 +295,7 @@
             }
             $scope.PagedLoad = function () {
                 //每页显示条数
-                var pageList = [5, 10, 15, 20];
+                var pageList = [2, 5, 10, 15, 20];
                 var pageSizeList = [];
                 for (var i = 0; i < pageList.length; i++) {
                     pageSizeList.push({ pagesize: pageList[i] });

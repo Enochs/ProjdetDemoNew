@@ -177,5 +177,36 @@ namespace Pro.Repository.Repository
         /// <returns></returns>
         Task SaveChangesAsync();
         #endregion
+
+        #region any
+
+        /// <summary>
+        /// 数据是否存在
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        bool Any(Expression<Func<TEntity, bool>> predicate);
+
+        #endregion
+
+
+        #region z.entityframework.extension
+
+        /// <summary>
+        /// 批量添加
+        /// </summary>
+        /// <param name="entities"></param>
+        void zAddRange(List<TEntity> entities);
+
+
+        /// <summary>
+        /// 批量修改
+        /// </summary>
+        /// <param name="entities"></param>
+        TEntity zUpdate(List<TEntity> entities);
+
+
+
+        #endregion
     }
 }

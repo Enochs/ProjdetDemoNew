@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EntityFramework.Extensions;
 using System.Linq.Expressions;
 using System.Data.Entity;
 using AutoMapper;
 using Pro.Repository.Extensions;
 using System.Data.Entity.Infrastructure;
 using Pro.Common;
+using Z.EntityFramework.Plus;
 
 namespace Pro.Repository.Repository
 {
 
     public class DataRepository<TEntity> : IDataRepository<TEntity> where TEntity : class
     {
-        public EFDbContext dbContext=new EFDbContext();
+        public EFDbContext dbContext = new EFDbContext();
         private DbSet<TEntity> dbSet;
 
         public DataRepository()
@@ -233,6 +233,19 @@ namespace Pro.Repository.Repository
         }
         #endregion
 
+        #region any
+        /// <summary>
+        /// 数据是否存在
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool Any(Expression<Func<TEntity, bool>> predicate)
+        {
+            return dbContext.Set<TEntity>().Any(predicate);
+        }
+
+        #endregion
+
         #region insert
 
         public virtual async Task<TEntity> InsertAsync(TEntity entity)
@@ -279,6 +292,29 @@ namespace Pro.Repository.Repository
         public Task SaveChangesAsync()
         {
             return dbContext.SaveChangesAsync();
+        }
+
+        #endregion
+
+        #region z.entityframework.extension
+
+        /// <summary>
+        /// 批量添加
+        /// </summary>
+        /// <param name="entities"></param>
+        public void zAddRange(List<TEntity> entities)
+        {
+            dbContext.Set<TEntity>().BulkInsert(entities);
+        }
+
+        /// <summary>
+        /// 批量修改
+        /// </summary>
+        /// <param name="entities"></param>
+        public TEntity zUpdate(List<TEntity> entities)
+        {
+            dbContext.Set<TEntity>().BulkUpdate(entities);
+            return entities.FirstOrDefault();
         }
 
         #endregion

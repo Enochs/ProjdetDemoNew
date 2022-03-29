@@ -302,6 +302,7 @@ var hhl = hhl || {};
     //form表单 提交验证
     hhl.ajax = function (url, data, callback, type, datatype, contentType) {
 
+
         if (!type) {
             type = "post";
         }
@@ -315,36 +316,54 @@ var hhl = hhl || {};
         if (!data) {
             data = $("form").serialize()
         }
+        var isPost = true;      //是否提交  默认提交
+        $("form").find(".text").each(function () {
+            var label = $(this).parent().prev();
+            var name = $(label).text();
 
-        $.ajax({
-            async: true,
-            cahce: false,
-            type: type,
-            contentType: contentType,
-            url: url,
-            datatype: datatype,
-            data: data,
-            timeout: 10000,
-            beforeSend: function () {
-                hhl.config.isPost = false;
-                hhl.dialog.load();
-            },
-            complete: function () {
-                hhl.dialog.closeAll();
-                hhl.config.isPost = true;
-            },
-            error: function (jqXHP, status, error) {
-                hhl.notify.error(jqXHP.responseText, "错误消息");
-            },
-            success: function (result) {
-                if (callback) {
-                    callback(result)
-                } else {
-                    hhl.callbackRefresh(result);
-
-                }
+            var zhi = $(this).val();
+            if (!zhi) {
+                hhl.notify.warn("请填写" + name);
+                isPost = false
+                return false;
             }
         });
+
+        debugger
+
+        //确定提交
+        if (isPost) {
+
+            $.ajax({
+                async: true,
+                cahce: false,
+                type: type,
+                contentType: contentType,
+                url: url,
+                datatype: datatype,
+                data: data,
+                timeout: 10000,
+                beforeSend: function () {
+                    hhl.config.isPost = false;
+                    hhl.dialog.load();
+                },
+                complete: function () {
+                    hhl.dialog.closeAll();
+                    hhl.config.isPost = true;
+                },
+                error: function (jqXHP, status, error) {
+                    hhl.notify.error(jqXHP.responseText, "错误消息");
+                },
+                success: function (result) {
+                    if (callback) {
+                        callback(result)
+                    } else {
+                        hhl.callbackRefresh(result);
+
+                    }
+                }
+            });
+        }
     }
 
     //提交方法  弹出窗体
