@@ -486,6 +486,30 @@ namespace Pro.Extension
                     //}
                 }
             }
+            else
+            {
+                if (columnName.Contains("/"))
+                {
+                    int i = 0;
+                    List<string> columnList = columnName.Split('/').ToList();
+                    foreach (var column in columnList)
+                    {
+                        PropertyInfo property = typeof(T).GetProperty(column);  //字段属性
+                        //MemberExpression left = Expression.Property(param, property);       //主题表达式
+                        //Expression left1 = Expression.Call(left, strings);
+                        //if (i == 0)
+                        //{
+                        //    where2 = Expression.Call(left1, method, right2);
+                        //}
+                        //else
+                        //{
+                        //    Expression where = Expression.Call(left1, method, right2);
+                        //    where2 = Expression.Or(where2, where);
+                        //}
+                        i++;
+                    }
+                }
+            }
         }
         #endregion
     }

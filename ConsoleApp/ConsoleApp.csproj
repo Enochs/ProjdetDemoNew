@@ -49,5 +49,23 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pro.Dal\Pro.Dal.csproj">
+      <Project>{12d5b96f-c734-46a6-bc98-67e8aeb70190}</Project>
+      <Name>Pro.Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pro.Extension\Pro.Extension.csproj">
+      <Project>{97946e13-7c55-46e7-aa29-e516c62da78c}</Project>
+      <Name>Pro.Extension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pro.Model\Pro.Model.csproj">
+      <Project>{9abbfbb4-28fe-4e7a-86a5-90481262867c}</Project>
+      <Name>Pro.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pro.Repository\Pro.Repository.csproj">
+      <Project>{8604df9e-228d-424e-89fc-3dd02dcc8fc2}</Project>
+      <Name>Pro.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

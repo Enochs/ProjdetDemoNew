@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using System.Data.Entity;
 using Pro.Model.dto;
 using EntityFramework.Extensions;
+using Pro.Utils;
 
 namespace Pro.Dal.Stu
 {
@@ -80,8 +81,6 @@ namespace Pro.Dal.Stu
                              s_phone = c.s_phone,
                              s_remark = c.s_remark,
                              s_status = c.s_status,
-                             SexName = c.s_sex == 0 ? "男" : "女",
-                             StatusName = c.s_status == 1 ? "启用" : "禁用",
                              s_Grade_ID = c.s_Grade_ID,
                              GradeName = d.GradeName
                          });

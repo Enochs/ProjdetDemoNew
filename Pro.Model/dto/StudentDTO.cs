@@ -29,7 +29,19 @@ namespace Pro.Model.dto
         public byte? s_sex { get; set; }
 
         [Display(Name = "性别")]
-        public string SexName { get; set; }
+        public string SexName
+        {
+            get
+            {
+                return s_sex == 0 ? "男" : "女";
+            }
+            set
+            {
+                this.SexName = value.ToString();
+            }
+        }
+
+        public string Sex { get; set; }
 
         [Display(Name = "年龄")]
         public int? s_age { get; set; }
@@ -41,7 +53,17 @@ namespace Pro.Model.dto
         public byte? s_status { get; set; }
 
         [Display(Name = "状态")]
-        public string StatusName { get; set; }
+        public string StatusName
+        {
+            get
+            {
+                return s_status == 1 ? "启用" : "禁用";
+            }
+            set
+            {
+                this.StatusName = value.ToString();
+            }
+        }
 
         [Display(Name = "备注")]
         public string s_remark { get; set; }

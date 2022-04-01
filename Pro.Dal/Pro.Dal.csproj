@@ -71,6 +71,10 @@
       <Project>{dd28c47c-fe0d-4cdf-8c30-5852526d788a}</Project>
       <Name>Pro.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pro.Extension\Pro.Extension.csproj">
+      <Project>{97946E13-7C55-46E7-AA29-E516C62DA78C}</Project>
+      <Name>Pro.Extension</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pro.Interface\Pro.Interface.csproj">
       <Project>{2b43fc66-d722-49b3-8a24-bc537498391d}</Project>
       <Name>Pro.Interface</Name>
@@ -82,6 +86,10 @@
     <ProjectReference Include="..\Pro.Repository\Pro.Repository.csproj">
       <Project>{8604df9e-228d-424e-89fc-3dd02dcc8fc2}</Project>
       <Name>Pro.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pro.Utils\Pro.Utils.csproj">
+      <Project>{3c82f61f-e776-491c-be97-6f3c778e9b28}</Project>
+      <Name>Pro.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
