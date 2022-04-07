@@ -23,6 +23,9 @@ namespace ConsoleApp
             //Test();
             //ExpressionTest3();
             //ExpressionTest4();
+
+
+
             Console.ReadKey();
         }
 
@@ -185,6 +188,29 @@ namespace ConsoleApp
             {
                 Console.WriteLine($"{year}不是闰年");
             }
+        }
+        #endregion
+
+        #region 奇偶数加减
+        /// <summary>
+        /// 1-2+3-4+5
+        /// </summary>
+        /// <param name="num"></param>
+        public static void Plus(int num)
+        {
+            int result = 0;
+            for (int i = 0; i < num + 1; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    result = result - i;
+                }
+                else
+                {
+                    result += i;
+                }
+            }
+            Console.Write(result);
         }
         #endregion
 
@@ -494,9 +520,9 @@ namespace ConsoleApp
                 new Student() { s_id = Guid.NewGuid(), s_name = "赵五",s_loginName="wangwu", s_address = "北京" ,s_age=22 },
                 new Student() { s_id = Guid.NewGuid(), s_name = "王六",s_loginName="zhaoliu", s_address = "上海" ,s_age=19 },
                 new Student() { s_id = Guid.NewGuid(), s_name = "李宁",s_loginName="lining", s_address = "重庆" ,s_age=18 },
-                new Student() { s_id = Guid.NewGuid(), s_name = "萧峰",s_loginName="xiaofeng", s_address = "南京" ,s_age=18 },
+                new Student() { s_id = Guid.NewGuid(), s_name = "萧峰",s_loginName="xiaofeng", s_address = "南京" ,s_age=26 },
                 new Student() { s_id = Guid.NewGuid(), s_name = "姚明",s_loginName="yaoming", s_address = "重庆" ,s_age=33 },
-                new Student() { s_id = Guid.NewGuid(), s_name = "小强",s_loginName="xiaoqiang", s_address = "天津" ,s_age=18 },
+                new Student() { s_id = Guid.NewGuid(), s_name = "小强",s_loginName="xiaoqiang", s_address = "天津" ,s_age=27 },
             };
             return stuList;
         }
@@ -522,24 +548,6 @@ namespace ConsoleApp
         /// 值
         /// </summary>
         public string Value { get; set; }
-
-
-
-
-
-        /// <summary>
-        /// 字段名
-        /// </summary>
-        public string ConditionName { get; set; }
-        /// <summary>
-        /// 符号(等于 大于 小于)
-        /// </summary>
-        public string ConditionMethod { get; set; }
-
-        /// <summary>
-        /// 值
-        /// </summary>
-        public string ConditionValue { get; set; }
     }
     #endregion
 }

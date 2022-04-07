@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 using System.Data.Entity;
 using Pro.Model.dto;
 using EntityFramework.Extensions;
-using Pro.Utils;
+using Pro.Extension;
 
 namespace Pro.Dal.Stu
 {
@@ -85,6 +85,8 @@ namespace Pro.Dal.Stu
                              GradeName = d.GradeName
                          });
 
+            string sexName = EnumHelper.GetDescription(typeof(Gender), 1);
+
             if (parmList != null || parmList.Count != 0)
             {
                 foreach (var parm in parmList)
@@ -92,6 +94,7 @@ namespace Pro.Dal.Stu
                     query = query.Where(parm);
                 }
             }
+
             //返回总条数
             count = query.Count();
             if (count > 0)

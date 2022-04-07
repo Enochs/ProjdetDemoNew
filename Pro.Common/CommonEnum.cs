@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Pro.Common
 {
@@ -17,13 +18,13 @@ namespace Pro.Common
         /// <summary>
         /// 禁用
         /// </summary>
-        [Display(Name = "禁用")]
+        [Display(Name = "禁用", Description = "禁用")]
         Disable = 0,
 
         /// <summary>
         /// 启用
         /// </summary>
-        [Display(Name = "启用")]
+        [Display(Name = "启用", Description = "启用")]
         Enable = 1,
     }
 
@@ -36,13 +37,15 @@ namespace Pro.Common
         /// <summary>
         /// 禁用
         /// </summary>
-        [Display(Name = "男")]
+        [Display(Name = "男", Description = "男")]
+        [Description("男")]
         Male = 0,
 
         /// <summary>
         /// 启用
         /// </summary>
-        [Display(Name = "女")]
+        [Display(Name = "女", Description = "女")]
+        [Description("女")]
         Femal = 1,
     }
 
