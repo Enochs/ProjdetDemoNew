@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
+//using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +15,10 @@ namespace Pro.Repository.Extensions
             list.ToList().ForEach(action);
         }
 
-        public static IReadOnlyList<T> ToReadonlyList<T>(this IEnumerable<T> list)
-        {
-            return list.ToImmutableList();
-        }
+        //public static IReadOnlyList<T> ToReadonlyList<T>(this IEnumerable<T> list)
+        //{
+        //    return list.ToImmutableList();
+        //}
 
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> list)
         {

@@ -105,7 +105,7 @@ namespace Pro.Repository.Repository
         /// <param name="predicate">条件</param>
         public void Update(TEntity T, Expression<Func<TEntity, bool>> predicate)
         {
-            //dbContext.Set<TEntity>().Where(predicate).Update(r => T);
+            dbContext.Set<TEntity>().Where(predicate).Update(r => T);
         }
 
 

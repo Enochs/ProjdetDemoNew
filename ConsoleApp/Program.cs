@@ -23,11 +23,10 @@ namespace ConsoleApp
             //Test();
             //ExpressionTest3();
             //ExpressionTest4();
-
-
-
             Console.ReadKey();
         }
+
+
 
         #region 冒泡排序法
         /// <summary>
