@@ -10,6 +10,7 @@ namespace IMCOA.Service
 {
     public class JsonHelper
     {
+        //  var paypalDetail = JsonHelper.Deserialize<Data.Model.EBayPayPalDetail>(paypalAccountDetail);
         public static T Deserialize<T>(string jsonStr)
         {
             try
@@ -23,6 +24,7 @@ namespace IMCOA.Service
             }
         }
 
+        // return JsonHelper.Serialize(configModel);
         public static string Serialize<T>(T obj)
         {
             try

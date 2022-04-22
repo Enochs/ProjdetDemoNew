@@ -254,6 +254,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Select.cs" />
+    <Compile Include="Mvc\ControllerHelperExtend.cs" />
     <Compile Include="Mvc\HtmlPageExtension.cs" />
     <Compile Include="Mvc\PagerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
