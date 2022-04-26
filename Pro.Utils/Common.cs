@@ -14,7 +14,7 @@ namespace Pro.Utils
     /// <summary>
     /// 常用方法
     /// </summary>
-    public static class IMCCommon
+    public static class Common
     {
         #region 产品图片路径常量
 
@@ -593,7 +593,7 @@ namespace Pro.Utils
         /// </summary>
         public static bool IsNullDateTime(DateTime? value)
         {
-            if (value == null || value == DateTime.MinValue || value <= IMCCommon.MinDateTime)
+            if (value == null || value == DateTime.MinValue || value <= Common.MinDateTime)
                 return true;
             return false;
         }
