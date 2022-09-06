@@ -72,9 +72,9 @@ function mutileControl(controls, url, value, text) {
         target.attr('valuefield', options.valueField);
         target.attr('textfield', options.textField);
         target.empty();
-        var option = $('<option></option>');
-        option.attr('value', '');
-        option.text(options.placeholder);
+        var option = $('<option></option>').val("").text(options.placeholder);
+        //option.attr('value', '');
+        //option.text(options.placeholder);
         target.append(option);
         //4.判断用户传过来的参数列表里面是否包含数据data数据集，如果包含，不用发ajax从后台取，否则否送ajax从后台取数据
         if (options.data.length > 0) {
@@ -87,15 +87,19 @@ function mutileControl(controls, url, value, text) {
             }
             if (!options.url) return;
             $.post(options.url, options.param, function (data) {
-                init(target, data);
+                //init(target, data);
+
+                $.each(data, function (i, item) {
+                    var option = $("<option></option>").val(item[options.valueField]).text(item[options.textField]);
+                    target.append(option);
+                });
             });
         }
 
         function init(target, data) {
-            $.each(data, function (i, item) {
-                var option = $('<option></option>');
-                option.attr('value', item[options.valueField]);
-                option.text(item[options.textField]);
+            $.each(data, function (i,item) {
+                debugger
+                var option = $("<option></option>").val(item[options.valueField]).text(item[options.textField]);
                 target.append(option);
             });
             //options.onLoadSuccess.call(target);
@@ -137,8 +141,8 @@ function mutileControl(controls, url, value, text) {
         url: null,
         param: null,
         data: null,
-        valueField: 'value',
-        textField: 'text',
+        valueField: 'CompanyID',
+        textField: 'CompanyName',
         placeholder: '请选择',
 
     };
