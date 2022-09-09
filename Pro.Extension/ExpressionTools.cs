@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using Pro.Model.dto;
 
 namespace Pro.Extension
 {
@@ -512,6 +513,36 @@ namespace Pro.Extension
             }
         }
         #endregion
+
+
+
+
+    }
+
+    /// <summary>
+    /// 封装条件
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    public class ExpressionSearch<TEntity> where TEntity : class
+    {
+        /// <summary>
+        /// 封装条件
+        /// </summary>
+        /// <param name="searchs"></param>
+        /// <param name="parmList"></param>
+        public void GetSearch(List<PropModel> searchs, List<Expression<Func<TEntity, bool>>> parmList)
+        {
+            if (searchs.Count() > 0)
+            {
+                //排除可能出生的异常数据
+                searchs = searchs.Where(c => !string.IsNullOrEmpty(c.value) && c.value != "," && c.value != "-1").ToList();
+
+                foreach (PropModel item in searchs)
+                {
+                    ExpressionTools.GetEqualPars(item.property, parmList, item.value, item.method);
+                }
+            }
+        }
     }
 
     public partial class PropModel
