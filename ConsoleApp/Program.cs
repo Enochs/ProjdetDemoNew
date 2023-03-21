@@ -25,6 +25,14 @@ namespace ConsoleApp
             //ExpressionTest3();
             //ExpressionTest4();
 
+            decimal price = 3.14000m;
+            Console.WriteLine(price.ToString("0.#####"));
+            // output: 3.14
+
+            var newPrice = Convert.ToDecimal(price.ToString("0.#####"));
+            Console.WriteLine(newPrice);
+           Console.Read();
+
             Console.ReadKey();
         }
 

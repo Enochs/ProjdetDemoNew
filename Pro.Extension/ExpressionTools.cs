@@ -513,8 +513,176 @@ namespace Pro.Extension
         }
         #endregion
 
+        #region 查询条件 lamada表达式( ==   or)
+        /// <summary>
+        /// 查询条件 lamada表达式( ==   or)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="columnName"></param>
+        /// <param name="parmList"></param>
+        public static void GetPars<T>(string columnName, List<Expression<Func<T, bool>>> parmList, string value = "", string methodInfo = "", string body = "c") where T : class, new()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    //expression表达式树主体构造开始
+                    ParameterExpression param = Expression.Parameter(typeof(T), body);   //声明Lambda表达式中的参数表达式c(c=>c.columnaName == value)
+                    MethodInfo method = null;
+                    if (!string.IsNullOrEmpty(methodInfo))
+                    {
+                        if (methodInfo.IndexOf("/") >= 0)
+                        {
+                            method = typeof(string).GetMethod(methodInfo.Split('/')[0], new Type[] { typeof(string) });
+                        }
+                        else
+                        {
+                            method = typeof(string).GetMethod(methodInfo, new Type[] { typeof(string) });
+                        }
+                    }
+                    //转string类型
+                    MethodInfo strings = typeof(object).GetMethod("ToString", new Type[] { });
 
+                    string[] attrColumn = null;
+                    string[] attrMehotd = null;
+                    MemberExpression left = null;
 
+                    //构造右表达式  用ConstantExpression表达式表示具有常量值的表达式
+                    ConstantExpression right1 = null;
+                    ConstantExpression right2 = null;
+
+                    Expression where2 = null;
+                    PropertyInfo propertys = typeof(T).GetProperty(columnName);
+
+                    ConstanRights<T>(columnName, value, methodInfo, ref right1, ref right2);
+
+                    if (columnName.Contains("/"))   //多字段 
+                    {
+                        attrColumn = columnName.Split('/');
+                        attrMehotd = methodInfo.Split('/');
+                        //获取字段(多字段)
+                        for (int i = 0; i < attrColumn.Length; i++)
+                        {
+                            if (attrMehotd.Length == attrColumn.Length)
+                            {
+                                method = typeof(string).GetMethod(attrMehotd[i], new Type[] { typeof(string) });
+                            }
+                            PropertyInfo property = typeof(T).GetProperty(attrColumn[i]);
+
+                            left = Expression.Property(param, property);
+                            Expression left1 = Expression.Call(left, strings);
+
+                            //构造右表达式  用ConstantExpression表达式表示具有常量值的表达式
+                            right2 = Expression.Constant(value);
+                            if (attrMehotd[i] == "Contains" || attrMehotd[i] == "StartsWith" || attrMehotd[i] == "EndsWith")       //模糊查询
+                            {
+                                if (method == null)
+                                {
+                                    throw new Exception("运算符表达错误,请调整");
+                                }
+                                if (i == 0)
+                                {
+                                    where2 = Expression.Call(left1, method, right2);
+                                }
+                                else
+                                {
+                                    Expression filterTmp = Expression.Call(left1, method, right2);
+                                    where2 = Expression.OrElse(filterTmp, where2);
+                                }
+                            }
+                            else
+                            {
+                                if (i == 0)
+                                {
+                                    //进行合并：例如:employeeid==登录员工ID
+                                    where2 = Expression.Equal(left1, right2);
+                                }
+                                else
+                                {
+                                    //进行合并：例如:employeeid==登录员工ID
+                                    Expression filterTmp = Expression.Equal(left1, right2);
+                                    where2 = Expression.OrElse(filterTmp, where2);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        left = Expression.Property(param, columnName);
+                        if (methodInfo == "Contains" || methodInfo == "StartsWith" || methodInfo == "EndsWith")       //模糊查询
+                        {
+                            if (method == null)
+                            {
+                                throw new Exception("运算符表达错误,请调整");
+                            }
+
+                            Expression left1 = Expression.Call(left, strings);
+                            if (value.Contains(","))            //多选
+                            {
+                                where2 = Expression.Call(right2, method, left1);
+                            }
+                            else                        //单个模糊查询
+                            {
+                                where2 = Expression.Call(left1, method, right2);
+                            }
+                        }
+                        else if (methodInfo == "Equal")       //多个数据查询
+                        {
+                            Expression left1 = Expression.Call(left, strings);
+                            if (value.Contains(","))            //多选
+                            {
+                                method = typeof(string).GetMethod("Contains");
+                                if (method == null)
+                                {
+                                    throw new Exception("运算符表达错误,请调整");
+                                }
+                                where2 = Expression.Call(right2, method, left1);
+
+                            }
+                            else                        //单个查询
+                            {
+                                where2 = Expression.Equal(left, right2);
+                            }
+                        }
+                        else if (methodInfo == "Range")
+                        {
+                            if (right2 == null && right1 != null)
+                            {
+                                where2 = Expression.GreaterThanOrEqual(left, right1);
+                            }
+                            else if (right2 != null && right1 == null)
+                            {
+                                where2 = Expression.LessThanOrEqual(left, right2);
+                            }
+                            else if (right2 != null && right1 != null)
+                            {
+                                where2 = Expression.GreaterThanOrEqual(left, right1);
+                                Expression filterTmp = Expression.LessThanOrEqual(left, right2);
+                                where2 = Expression.AndAlso(filterTmp, where2);
+                            }
+                        }
+                        else if (methodInfo.ToUpper() == "OR")
+                        {
+                            where2 = Expression.OrElse(left, right2);
+                        }
+                        else
+                        {
+                            where2 = Expression.Equal(left, right2);
+
+                        }
+                    }
+
+                    Expression<Func<T, bool>> pras = Expression.Lambda<Func<T, bool>>(where2, param);
+                    parmList.Add(pras);
+                }
+            }
+            catch (Exception e)
+            {
+                new Exception(e.Message);
+            }
+
+        }
+        #endregion
 
     }
 
@@ -558,5 +726,9 @@ namespace Pro.Extension
         /// lamada符号(运算符)
         /// </summary>
         public string method { get; set; }
+        /// <summary>
+        /// 主体
+        /// </summary>
+        public string body { get; set; }
     }
 }
